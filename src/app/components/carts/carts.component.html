@@ -1,0 +1,80 @@
+<div class="cartBox">
+  <h1 class="text-dander">Shopping Cart</h1>
+  <div class="headCart">
+    <p class="lead">
+      You Have
+      <label for="" class="text-danger">{{ cartPrdct.length }}</label> item in
+      your cart
+    </p>
+    <span class="text-danger card-header" (click)="clearItems()"
+      >Clear Shopping Cart</span
+    >
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Name</th>
+        <th>Price</th>
+        <th style="width: 25%">Quantity</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let item of items; let i = index"> -->
+      <tr *ngFor="let item of cartPrdct; let index = index">
+        <th></th>
+        <td>
+          <img src="{{ item.event.image }}" alt="" />
+        </td>
+        <td>{{ item.event.title }}</td>
+        <td>{{ item.event.price }} L.E</td>
+        <td>
+          <div class="quantity">
+            <button class="btn btn-dark" (click)="plasAmount(index)">+</button>
+            <input
+              class="form-control"
+              type="number"
+              [(ngModel)]="item.quantity"
+              min="1"
+              (change)="changeInput()"
+            />
+            <button
+              class="btn btn-dark"
+              (click)="minsAmount(index)"
+              [disabled]="item.quantity === 1"
+            >
+              -
+            </button>
+          </div>
+        </td>
+        <td>{{ item.event.price * item.quantity }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteItem(index)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Total:{{ total }}</th>
+        <th>
+          <button class="btn btn-success" (click)="addCartToApi()">
+            Order Now
+          </button>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<div class="alert alert-success" role="=alert" *ngIf="success">
+  <strong>well done!</strong> Your Order is Successfully send
+</div>

@@ -1,0 +1,49 @@
+<div class="container box pt-5 >">
+  <div class="my-2 w-25">
+    <label for="" class="my-1">categories</label>
+    <select class="form-control" (change)="selectCtgr($event)">
+      <option value="0">all Categories</option>
+      <option value="{{ item }}" *ngFor="let item of categories">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-md-3 col-sm-12" *ngFor="let product of products">
+      <div class="item">
+        <div routerLink="/details/{{ product.id }}">
+          <img src="{{ product.image }}" alt="" />
+          <div class="body">
+            <h4>{{ product.title }}</h4>
+            <p>{{ product.description }}</p>
+          </div>
+        </div>
+        <div
+          class="px-3 mb-2 d-flex justify-content-between align-items-center"
+        >
+          <button
+            class="btn btn-success"
+            *ngIf="!product.added"
+            (click)="addedCart(product)"
+          >
+            Add To Cart
+          </button>
+          <div class="d-flex w-50" *ngIf="product.added">
+            <input type="number" class="form-control" [(ngModel)]="amount" />
+            <button
+              class="btn btn-danger"
+              (click)="addToCart(product); removeCart(product)"
+            >
+              Add
+            </button>
+          </div>
+          <span>{{ product.price }} L.E</span>
+          <!-- <span>{{ product.price | currency : "EGP" }}</span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading" class="text-center w-100">
+  <app-spinner></app-spinner>
+</div>
